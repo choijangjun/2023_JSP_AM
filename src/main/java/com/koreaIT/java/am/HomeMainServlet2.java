@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/home/printDan")
+@WebServlet("/home/printDan2")
 public class HomeMainServlet2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -36,9 +36,9 @@ public class HomeMainServlet2 extends HttpServlet {
 		
 		int dan = Integer.parseInt(inputDan);
 		int limit = Integer.parseInt(inputLimit);
-		String color = inputColor;
 		
-		response.getWriter().append(String.format("<div style=\"color: %s;\">",color));
+		
+		response.getWriter().append(String.format("<div style=\"color: %s;\">",inputColor));
 		
 		response.getWriter().append(String.format("== %d단 ==<br />", dan));
 		

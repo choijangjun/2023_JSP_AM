@@ -1,6 +1,6 @@
 package com.koreaIT.java.am;
 
-import java.io.IOException;
+import java.io.IOException;	
 
 
 import jakarta.servlet.ServletException;
@@ -10,11 +10,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/home/main")
-public class HomeMainServlet extends HttpServlet {
+@WebServlet("/home/printDan")
+public class HomePrintDanServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Hello");
+		request.getRequestDispatcher("/jsp/home/printDan.jsp").forward(request, response);
 	}
 }
