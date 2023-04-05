@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/home/printDan")
+@WebServlet("/home/printDan") // -> url 매핑주소
 public class HomePrintDanServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
