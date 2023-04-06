@@ -24,6 +24,6 @@
 	<div>내용 : <%= (String) articleRow.get("body") %></div>
 	<div><a href="list">목록</a></div>
 	
-	<div><a href="doDelete?id=<%= articleRow.get("id") %>">게시글 삭제</a></div>
+	<div><a href="doDelete?id=<%= (int) articleRow.get("id") %>">게시글 삭제</a></div>
 </body>
 </html>
