@@ -10,10 +10,10 @@
 	<h1>게시물 작성</h1>
 	<script>
 		function jbSubmit() {
-			var loginPw = document.getElementById( 'loginPw' ).value;
-	        var loginPwCh = document.getElementById( 'loginPwCh' ).value;
+			var pw1 = document.getElementById( 'pw1' ).value;
+	        var pw2 = document.getElementById( 'pw2' ).value;
 			
-			if (loginPw != loginPwCh) {
+			if (pw1 != pw2) {
 				alert('비밀번호를 다시 입력해주세요');
 				return false;
 			}
@@ -28,10 +28,10 @@
 			아이디 : <input name="loginId" type="text" placeholder="아이디를 입력해주세요"/>
 		</div>
 		<div>
-			비밀번호 : <input name="loginPw" type="text" placeholder="비밀번호를 입력해주세요"/>
+			비밀번호 : <input name="loginPw" type="password" placeholder="비밀번호를 입력해주세요" required id="pw1"/>
 		</div>
 		<div>
-			비밀번호 확인 : <input name="loginPwCh" type="text" placeholder="비밀번호를 입력해주세요"/>
+			비밀번호 확인 : <input name="loginPwCh" type="password" placeholder="비밀번호를 입력해주세요" required id="pw2"/>
 		</div>
 		<div>
 			이름 : <input name="name" type="text" placeholder="이름을 입력해주세요"/>
