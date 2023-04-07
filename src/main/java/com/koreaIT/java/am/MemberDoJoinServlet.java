@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 
 import com.koreaIT.java.am.util.DBUtil;
 import com.koreaIT.java.am.util.SecSql;
@@ -16,11 +14,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/list")
-public class ArticleListServlet extends HttpServlet {
+@WebServlet("/member/doJoin")
+public class MemberDoJoinServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+      
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html; charset=UTF-8;");
 		
 		Connection conn = null;
 
@@ -30,43 +30,20 @@ public class ArticleListServlet extends HttpServlet {
 
 			conn = DriverManager.getConnection(url, "root", "");
 			
-			int page = 1;
-			if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
-				page = Integer.parseInt(request.getParameter("page"));
-			}
+			String loginId = request.getParameter("loginId");
+			String loginPw = request.getParameter("loginPw");
+			String name = request.getParameter("name");
 			
-			int itemsInAPage = 10;
+			SecSql sql = SecSql.from("INSERT INTO member");
+			sql.append("SET regDate = NOW()");
+			sql.append(", updateDate = NOW()");
+			sql.append(", loginId = ?", loginId);
+			sql.append(", loginPw = ?", loginPw);
+			sql.append(", `name` = ?", name);		
 			
-			int limitFrom = (page - 1) * itemsInAPage;
+			int id = DBUtil.insert(conn, sql);
 			
-			SecSql sql = SecSql.from("SELECT COUNT(*) FROM article");
-			
-			int totalCount =  DBUtil.selectRowIntValue(conn, sql);
-			int totalPage = (int) Math.ceil((double) totalCount / itemsInAPage);
-			
-			int pageSize = 5;
-			int from = page - pageSize;
-			if (from < 1) {
-				from = 1;
-			}
-			int end = page + pageSize;
-			if (end > totalPage) {
-				end = totalPage;
-			}
-			
-			sql = SecSql.from("SELECT * FROM article");
-			sql.append("ORDER BY id DESC");
-			sql.append("LIMIT ?, ?", limitFrom, itemsInAPage);
-			
-			List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);
-			
-			request.setAttribute("page", page);
-			request.setAttribute("from", from);
-			request.setAttribute("end", end);
-			request.setAttribute("totalPage", totalPage);
-			request.setAttribute("articleListMap", articleListMap);
-			
-			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
+			response.getWriter().append(String.format("<script>alert('%s님 회원가입이 완료되었습니다.'); location.replace('../home/main');</script>", name));
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");
@@ -81,5 +58,10 @@ public class ArticleListServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
 	}
 }
