@@ -8,8 +8,6 @@
 	Map<String, Object> articleRow = (Map) request.getAttribute("articleRow");
 %>
 
-
-
 <html>
 <head>
 <meta charset="UTF-8">
@@ -22,8 +20,10 @@
 	<div>날짜 : <%= (LocalDateTime) articleRow.get("regDate") %></div>
 	<div>제목 : <%= (String) articleRow.get("title") %></div>
 	<div>내용 : <%= (String) articleRow.get("body") %></div>
-	<div><a href="list">목록</a></div>
-	
-	<div><a href="doDelete?id=<%= (int) articleRow.get("id") %>">게시글 삭제</a></div>
+	<div>
+		<a href="list">목록</a>
+		<a href="modify?id=<%= (int) articleRow.get("id") %>">수정</a>
+		<a href="doDelete?id=<%= (int) articleRow.get("id") %>" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;">삭제</a>
+	</div>
 </body>
 </html>

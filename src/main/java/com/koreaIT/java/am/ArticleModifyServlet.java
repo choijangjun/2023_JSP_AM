@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Map;
 
 import com.koreaIT.java.am.util.DBUtil;
@@ -16,8 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/detail")
-public class ArticleDetailServlet extends HttpServlet {
+@WebServlet("/article/modify")
+public class ArticleModifyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,12 +33,12 @@ public class ArticleDetailServlet extends HttpServlet {
 			
 			SecSql sql = SecSql.from("SELECT * FROM article");
 			sql.append("WHERE id = ?", id);
-			 
+			
 			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
 			
 			request.setAttribute("articleRow", articleRow);
 			
-			request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
+			request.getRequestDispatcher("/jsp/article/modify.jsp").forward(request, response);
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");
