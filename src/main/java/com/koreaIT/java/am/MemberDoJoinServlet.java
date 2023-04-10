@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.koreaIT.java.am.config.Config;
 import com.koreaIT.java.am.util.DBUtil;
 import com.koreaIT.java.am.util.SecSql;
 
@@ -25,10 +26,9 @@ public class MemberDoJoinServlet extends HttpServlet {
 		Connection conn = null;
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			String url = "jdbc:mysql://127.0.0.1:3306/JSPTest?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
+			Class.forName(Config.getDBDriverName());
 
-			conn = DriverManager.getConnection(url, "root", "");
+			conn = DriverManager.getConnection(Config.getDBUrl(), Config.getDBUser(), Config.getDBPassWd());
 			
 			String loginId = request.getParameter("loginId");
 			String loginPw = request.getParameter("loginPw");
@@ -43,7 +43,7 @@ public class MemberDoJoinServlet extends HttpServlet {
 			
 			int id = DBUtil.insert(conn, sql);
 			
-			response.getWriter().append(String.format("<script>alert('%s님 회원가입이 완료되었습니다.'); location.replace('../home/main');</script>", name));
+			response.getWriter().append(String.format("<script>alert('%s님 회원가입이 완료되었습니다.'); location.replace('../home/main');</script>", loginId));
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");
