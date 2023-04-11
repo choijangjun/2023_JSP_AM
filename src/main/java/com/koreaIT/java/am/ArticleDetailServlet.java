@@ -24,18 +24,7 @@ public class ArticleDetailServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Connection conn = null;
-		
-		HttpSession session = request.getSession();
-		
-		int loginedMemberId = -1;
-		
-		if (session.getAttribute("loginedMemberId") != null) {
-			loginedMemberId = (int) session.getAttribute("loginedMemberId");
-		}
-		
-		request.setAttribute("loginedMemberId", loginedMemberId);
-		
-		
+
 		try {
 			Class.forName(Config.getDBDriverName());
 
@@ -52,6 +41,16 @@ public class ArticleDetailServlet extends HttpServlet {
 			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
 			
 			request.setAttribute("articleRow", articleRow);
+			
+			HttpSession session = request.getSession();
+			
+			int loginedMemberId = -1;
+			
+			if (session.getAttribute("loginedMemberId") != null) {
+				loginedMemberId = (int) session.getAttribute("loginedMemberId");
+			}
+			
+			request.setAttribute("loginedMemberId", loginedMemberId);
 			
 			request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
 			
