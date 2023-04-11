@@ -22,7 +22,6 @@ public class ArticleWriteServlet extends HttpServlet {
 			response.getWriter().append(String.format("<script>alert('로그인 후 이용해주세요'); location.replace('../member/login');</script>"));
 			return;
 		}
-		
 		request.getRequestDispatcher("/jsp/article/write.jsp").forward(request, response);
 	}
 }
